@@ -11,16 +11,17 @@ expected_files = [
     "generation_config.json"
 ]
 
+ 
+def discover_model(model_id):
+    try:
+        download = snapshot_download(repo_id=model_id, local_dir=f"./workspace/{model_id}", allow_patterns=expected_files, repo_type="model")
+    except GatedRepoError:
+        raise SystemExit(f"Repo '{model_id}' requires license acceptation / hf token.")
+    except RepositoryNotFoundError:
+        raise SystemExit(f"Repo '{model_id}' does not exists ( or it is private).")
 
-model_id = input("Which model do you want to check?").strip()
-
-try:
-    download = snapshot_download(repo_id=model_id, local_dir=f"./workspace/{model_id}", allow_patterns=expected_files, repo_type="model")
-except GatedRepoError:
-    raise SystemExit(f"Repo '{model_id}' requires license acceptation / hf token.")
-except RepositoryNotFoundError:
-    raise SystemExit(f"Repo '{model_id}' does not exists ( or it is private).")
-
+    files_info = check_files(download)
+    return files_info
 
 def verify_download(path):
     return [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
@@ -37,6 +38,3 @@ def check_files(path):
             print(f"missing {name}")
             informations[name] = None
     return informations
-print(verify_download(download))
-files_info = check_files(download)
-print(files_info)

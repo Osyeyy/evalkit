@@ -1,0 +1,15 @@
+README.md
+pyproject.toml
+src/evalkit/__init__.py
+src/evalkit/cli.py
+src/evalkit/discovery.py
+src/evalkit/inspector.py
+src/evalkit/schemas.py
+src/evalkit.egg-info/PKG-INFO
+src/evalkit.egg-info/SOURCES.txt
+src/evalkit.egg-info/dependency_links.txt
+src/evalkit.egg-info/entry_points.txt
+src/evalkit.egg-info/requires.txt
+src/evalkit.egg-info/top_level.txt
+tests/test_discovery.py
+tests/test_inspector.py
