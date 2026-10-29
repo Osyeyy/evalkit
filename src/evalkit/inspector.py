@@ -8,17 +8,18 @@ def read_json(path):
 
 
 def extract_model_info(config_output):
-    model_type = config_output.get("model_type")
+    text_config = config_output.get("text_config", config_output)
+    model_type = text_config.get("model_type")
     architectures = config_output.get("architectures")
-    hidden_size = config_output.get("hidden_size")
-    num_hidden_layers = config_output.get("num_hidden_layers")
-    num_attention_heads = config_output.get("num_attention_heads")
-    num_key_value_heads = config_output.get("num_key_value_heads")
-    vocab_size = config_output.get("vocab_size")
-    intermediate_size = config_output.get("intermediate_size")
-    max_position_embeddings = config_output.get("max_position_embeddings")
-    head_dim = config_output.get("head_dim")
-    tie_word_embeddings = config_output.get("tie_word_embeddings")
+    hidden_size = text_config.get("hidden_size")
+    num_hidden_layers = text_config.get("num_hidden_layers")
+    num_attention_heads = text_config.get("num_attention_heads")
+    num_key_value_heads = text_config.get("num_key_value_heads")
+    vocab_size = text_config.get("vocab_size")
+    intermediate_size = text_config.get("intermediate_size")
+    max_position_embeddings = text_config.get("max_position_embeddings")
+    head_dim = text_config.get("head_dim")
+    tie_word_embeddings = text_config.get("tie_word_embeddings")
 
 
     return {
@@ -35,14 +36,22 @@ def extract_model_info(config_output):
         "tie_word_embeddings": tie_word_embeddings
 }
 
-def inspect_weights_index(index_path):
+def inspect_weights_index(index_output):
     metadata = index_output.get("metadata", {})
     total_size = metadata.get("total_size")
     weight_map = index_output.get("weight_map", {})
+    shard_count = len(set(weight_map.values()))
+    tensor_count = len(weight_map)
+    unique_shards = sorted(set(weight_map.values()))
+    total_size_gib = (total_size / (1024 ** 3) if total_size is not None else None)
 
+    
     return {
         "total_size": total_size,
-        "weight_map": weight_map
+        "shard_count": shard_count,
+        "total_size_gib": total_size_gib,
+        "tensor_count": tensor_count,
+        "unique_shards": unique_shards
     }
 
 

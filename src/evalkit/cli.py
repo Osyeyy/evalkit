@@ -1,5 +1,8 @@
 from evalkit.discovery import discover_model
 from evalkit.inspector import read_json, extract_model_info, inspect_weights_index
+from evalkit.estimator import check_compatibility
+from evalkit.hardware import hardware_specs
+
 
 def main():
     model_id = input("Which model do you want to check? ").strip()
@@ -29,6 +32,19 @@ def main():
         print(weights_index)
     else:
         print("Weights index not found")
+
+
+    hardware_info = hardware_specs()
+
+    if index_path is not None:
+        model_size_gib = weights_index["total_size_gib"]
+        free_vram_gib = hardware_info["free_vram_gib"]
+
+        if model_size_gib is not None and free_vram_gib is not None:
+            compatible = check_compatibility(model_size_gib, free_vram_gib)
+            print("weights fit in available vram: ", compatible)
+        else:
+            print("cannot estimate compatibility: missing memory data")
 
 
 if __name__ == "__main__":
