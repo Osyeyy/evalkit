@@ -53,7 +53,7 @@ def main():
     if num_parameters is not None:
         for dtype in dtype_bits:
             estimated_memory = estimate_weights_memory(num_parameters, dtype)
-            print(f"{dtype}: {estimated_memory:.2f} GB")
+            print(f"{dtype}: {estimated_memory:.2f} GiB")
 
 
 
