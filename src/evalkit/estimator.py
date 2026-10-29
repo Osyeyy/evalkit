@@ -21,7 +21,3 @@ def estimate_weights_memory(num_parameters, dtype):
 
     return memory_gib
 
-
-# result = estimate_weights_memory(4_000_000_000, "bf16")
-# print(result)
-

@@ -1,4 +1,5 @@
 import json
+from huggingface_hub import HfApi
 
 def read_json(path):
     with open(f'{path}') as json_file:
@@ -53,5 +54,21 @@ def inspect_weights_index(index_output):
         "tensor_count": tensor_count,
         "unique_shards": unique_shards
     }
+
+def inspect_model_parameter(model_id):
+    api = HfApi()
+    model_info = api.model_info(model_id)
+
+    if hasattr(model_info, 'safetensors') and model_info.safetensors is not None:
+        return {
+            "num_parameters": model_info.safetensors.total
+        }
+
+    return {
+        "num_parameters": None
+    }
+
+
+
 
 
