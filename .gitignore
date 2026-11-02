@@ -1,3 +1,4 @@
 # venv
 venv/
 workspace/
+src/evalkit/__pycache__

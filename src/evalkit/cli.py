@@ -2,9 +2,14 @@ from evalkit.discovery import discover_model
 from evalkit.inspector import read_json, extract_model_info, inspect_weights_index, inspect_model_parameter
 from evalkit.estimator import check_compatibility, dtype_bits, estimate_weights_memory
 from evalkit.hardware import hardware_specs
+from evalkit.evaluator import evaluate_model
+from evalkit.dataset import load_wikitext 
+
 
 def main():
     model_id = input("Which model do you want to check? ").strip()
+
+
     files_info = discover_model(model_id)
 
 
@@ -55,6 +60,9 @@ def main():
             estimated_memory = estimate_weights_memory(num_parameters, dtype)
             print(f"{dtype}: {estimated_memory:.2f} GiB")
 
+    text = load_wikitext()
+    results = evaluate_model(model_id, text)
+    print(results) 
 
 
 if __name__ == "__main__":
