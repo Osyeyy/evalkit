@@ -1,0 +1,13 @@
+{
+    "model_id": "HuggingFaceTB/SmolLM2-135M",
+    "dataset": "wikitext-2-raw-v1",
+    "evaluation": {
+        "mean_loss": 2.7750020492811123,
+        "perplexity": 16.038658142089844,
+        "tokens_scored": 304985
+    },
+    "settings": {
+        "window": 512,
+        "context": 384
+    }
+}

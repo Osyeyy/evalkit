@@ -4,7 +4,7 @@ from evalkit.estimator import check_compatibility, dtype_bits, estimate_weights_
 from evalkit.hardware import hardware_specs
 from evalkit.evaluator import evaluate_model
 from evalkit.dataset import load_wikitext 
-
+from evalkit.report import save_report
 
 def main():
     model_id = input("Which model do you want to check? ").strip()
@@ -60,9 +60,14 @@ def main():
             estimated_memory = estimate_weights_memory(num_parameters, dtype)
             print(f"{dtype}: {estimated_memory:.2f} GiB")
 
+    dataset_name = "wikitext-2-raw-v1"
+    
     text = load_wikitext()
     results = evaluate_model(model_id, text)
     print(results) 
+
+    report_path = save_report(model_id, dataset_name, results)
+    print(f"Report saved: {report_path}")
 
 
 if __name__ == "__main__":

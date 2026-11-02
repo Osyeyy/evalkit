@@ -50,5 +50,5 @@ def evaluate_model(model_id, text):
     assert total_tokens == expected_tokens, (
         f"token mismatch: {total_tokens} != {expected_tokens}"
     )
-    
-    return {"mean_loss": mean_loss, "tokens_scored": total_tokens, "perplexity: ": perplexity}
+
+    return {"mean_loss": mean_loss, "tokens_scored": total_tokens, "perplexity": perplexity, "window": window, "context": context}
